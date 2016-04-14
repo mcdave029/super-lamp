@@ -21,8 +21,10 @@ gem "virtus"
 gem "pundit"
 gem "country_select"
 gem "world-flags"
+gem 'annotate'
 
 group :development do
+  gem 'guard-rspec', require: false
   gem "quiet_assets"
   gem "awesome_print"
   gem "html2haml"
