@@ -19,4 +19,14 @@ class Team < ActiveRecord::Base
   validates :name, uniqueness: true
 
   has_and_belongs_to_many :games
+
+  has_many :memberships
+	has_many :players, through: :memberships
+    
+	["present","former"].each do |m|
+		define_method "#{m.downcase}_players".to_sym do
+      memberships.send(m).includes(:player).map{|m|m.player}	
+    end
+  end
+
 end
