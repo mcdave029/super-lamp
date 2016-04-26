@@ -14,6 +14,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
 private
   def oauth_sign_in
+    current_user = begin
+                    User.find_by_email(request.env["omniauth.auth"][:info][:email]) 
+                  rescue ActiveRecord::RecordNotFound
+                    nil
+                  end if current_user.nil?
     user = OauthProvider.new(request.env["omniauth.auth"], current_user).save
 
     if user.present?
